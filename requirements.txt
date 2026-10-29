@@ -1,0 +1,10 @@
+langgraph
+langchain_core
+fastapi
+uvicorn
+pydantic>=2
+pydantic_settings
+sqlalchemy>=2.0
+starlette
+httpx
+pytest

@@ -1,0 +1,28 @@
+# Standalone deployment for Project A (ecom-listing-orchestrator).
+#
+# Project A runs fully OFFLINE with its mock visual adapter by default
+# (LISTING_VISUAL_SERVICE_URL empty). To wire the real visual-generation
+# service (Project B), either:
+#   - use the integrated compose at ../docker-compose.yml (builds A + B), or
+#   - set LISTING_VISUAL_SERVICE_URL to a reachable visual-studio instance,
+#     e.g. http://visual-studio:8011 inside a shared docker network.
+#
+#   docker compose up --build
+#   curl http://localhost:8000/health
+
+services:
+  orchestrator:
+    build: .
+    image: ecom-listing-orchestrator:local
+    container_name: ecom-listing-orchestrator
+    environment:
+      LISTING_DB_PATH: /data/listing.db
+      LISTING_VISUAL_SERVICE_URL: ""        # empty -> mock adapter (offline)
+      LISTING_AUTO_APPROVE: "false"
+      LISTING_MAX_REPLAN: "2"
+    ports:
+      - "8000:8000"
+    command: ["sh", "-c", "PYTHONPATH=src python -m ecom_orchestrator api --host 0.0.0.0 --port 8000"]
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

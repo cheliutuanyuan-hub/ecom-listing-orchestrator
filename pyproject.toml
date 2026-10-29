@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecom-listing-orchestrator"
+version = "1.0.0"
+description = "LangGraph multi-agent orchestration for e-commerce product listing production (Project A)."
+requires-python = ">=3.10"
+dependencies = [
+    "langgraph",
+    "langchain_core",
+    "fastapi",
+    "uvicorn",
+    "pydantic>=2",
+    "pydantic_settings",
+    "sqlalchemy>=2.0",
+    "starlette",
+    "httpx",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

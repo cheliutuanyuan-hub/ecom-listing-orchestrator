@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="bc5hLP3UnKUTXvdHH6fHE0">
+<head data-page-node-id="J4HzylObHQ4llGyhbiH8sH">
+<meta charset="utf-8" data-page-node-id="p5U8X7rDf3VPamhhnocWHd">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="kbZB0mQJyWqVpyPtlNxqXo">
+<title>电商上架工作台 · ecom-listing-orchestrator</title>
+<style>
+  :root {
+    --bg: #f7f5f2;
+    --surface: #ffffff;
+    --ink: #1c1917;
+    --ink-2: #57534e;
+    --ink-3: #a8a29e;
+    --line: #e7e5e4;
+    --accent: #c2410c;
+    --accent-soft: #fdf0e8;
+    --ok: #15803d;
+    --ok-soft: #eef7f0;
+    --warn: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--accent); color: #fff;
+    display: grid; place-items: center;
+    font-weight: 500; font-size: 15px; letter-spacing: .5px;
+  }
+  .brand h1 { margin: 0; font-size: 15px; font-weight: 500; }
+  .brand p { margin: 0; font-size: 12px; color: var(--ink-3); }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--ink-2);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 5px 12px; background: var(--surface);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
+  .dot.on { background: var(--ok); }
+  main {
+    max-width: 1180px; margin: 0 auto; padding: 26px 28px 60px;
+    display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 22px;
+    align-items: start;
+  }
+  @media (max-width: 880px) { main { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px;
+  }
+  .card + .card { margin-top: 18px; }
+  .card h2 {
+    margin: 0 0 14px; font-size: 13px; font-weight: 500;
+    color: var(--ink-2); letter-spacing: .2px;
+  }
+  label { display: block; font-size: 12px; color: var(--ink-2); margin-bottom: 7px; }
+  textarea, input[type="text"] {
+    width: 100%; border: 1px solid var(--line); border-radius: 9px;
+    padding: 10px 12px; font: inherit; font-size: 13px; color: var(--ink);
+    background: #fdfcfb; resize: vertical; outline: none;
+  }
+  textarea:focus, input:focus { border-color: var(--ink-3); }
+  .segmented { display: flex; gap: 6px; margin-bottom: 16px; }
+  .segmented button {
+    flex: 1; padding: 8px 0; font: inherit; font-size: 12px;
+    border: 1px solid var(--line); background: var(--surface);
+    color: var(--ink-2); border-radius: 8px; cursor: pointer;
+  }
+  .segmented button[aria-pressed="true"] {
+    border-color: var(--accent); color: var(--accent); background: var(--accent-soft);
+  }
+  .switch {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 10px 0 14px; font-size: 12px; color: var(--ink-2);
+  }
+  .switch input { width: 36px; height: 20px; accent-color: var(--accent); }
+  .btn {
+    width: 100%; padding: 11px 0; border: 0; border-radius: 9px;
+    background: var(--ink); color: #fff; font: inherit; font-size: 13px;
+    font-weight: 500; cursor: pointer;
+  }
+  .btn:hover { background: #292524; }
+  .btn:disabled { background: var(--ink-3); cursor: default; }
+  .steps { list-style: none; margin: 0; padding: 0; }
+  .steps li {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 12px; color: var(--ink-3); padding: 4px 0;
+  }
+  .steps li .tick {
+    width: 15px; height: 15px; border-radius: 50%;
+    border: 1px solid var(--line); display: grid; place-items: center;
+    font-size: 9px; color: transparent; flex: none;
+  }
+  .steps li.done { color: var(--ink); }
+  .steps li.done .tick { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .steps li.active { color: var(--accent); }
+  .steps li.active .tick { border-color: var(--accent); }
+  .empty {
+    border: 1px dashed var(--line); border-radius: 14px;
+    padding: 64px 24px; text-align: center; color: var(--ink-3);
+    background: var(--surface); font-size: 13px;
+  }
+  .empty strong { display: block; color: var(--ink-2); font-weight: 500; margin-bottom: 6px; }
+  .summary {
+    display: flex; flex-wrap: wrap; gap: 10px 22px;
+    padding: 14px 18px; border-radius: 12px;
+    background: var(--ok-soft); border: 1px solid #dcebe1; margin-bottom: 18px;
+  }
+  .summary div { font-size: 12px; color: var(--ink-2); }
+  .summary b { display: block; font-size: 15px; font-weight: 500; color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .shot {
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: var(--surface);
+  }
+  .shot img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #faf9f7; }
+  .shot .meta { padding: 12px 13px 14px; }
+  .tag {
+    display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px;
+    background: var(--accent-soft); color: var(--accent); margin-bottom: 8px;
+  }
+  .sp { font-size: 12px; color: var(--ink); margin: 0 0 8px; }
+  .flags { font-size: 11px; color: var(--ink-3); line-height: 1.7; word-break: break-all; }
+  .err {
+    border: 1px solid #f0d6d0; background: #fdf3f0; color: #9a3412;
+    border-radius: 10px; padding: 12px 14px; font-size: 12px;
+  }
+  .skeleton { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .skeleton div {
+    height: 260px; border-radius: 12px;
+    background: linear-gradient(90deg, #f1efec 25%, #f8f7f5 50%, #f1efec 75%);
+    background-size: 200% 100%; animation: sh 1.2s infinite;
+  }
+  @keyframes sh { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .hint { font-size: 11px; color: var(--ink-3); margin-top: 10px; }
+</style>
+</head>
+<body data-page-node-id="SecpvbEDSwFE3O9lWB6EGZ">
+<header data-page-node-id="itFciHwcIZQJ4aFV6txK1C">
+  <div class="brand" data-page-node-id="4NZvnmWEjxQDBh4UfLcJ2l">
+    <div class="mark" data-page-node-id="Nwj7IG09lYSyCAc07Zyk6G">电商</div>
+    <div data-page-node-id="4tudvdq6J7fn8gwgR3wP5B">
+      <h1 data-page-node-id="E8FLlKk4PYeROZ9V8VQsTi">电商上架工作台</h1>
+      <p data-page-node-id="ZbfcPuDepqUTdX66fU0GlK">LangGraph 编排器 · 视觉生成服务</p>
+    </div>
+  </div>
+  <div class="pill" data-page-node-id="owNUKylpCHsHel7C3IlIPl"><span class="dot" id="healthDot" data-page-node-id="vwduBIqUKtnNkge4InClW1"></span><span id="healthText" data-page-node-id="7yNjaP3ECFOWDui8utvwVJ">检测服务…</span></div>
+</header>
+
+<main data-page-node-id="AUnlUuESyBAqIF5l7LGFt8">
+  <section data-page-node-id="tPQBDZqQwGBHhjstwld8vl">
+    <div class="card" data-page-node-id="Z0lEe7gxMYx8d5F7ZMnw2T">
+      <h2 data-page-node-id="Bd93aMy51iWSv3u0Qz45u8">新建上架任务</h2>
+      <label for="product" data-page-node-id="jfybAcbRTTrCgXvoZog4BI">商品名称 / 描述</label>
+      <textarea id="product" rows="3" placeholder="例：夏季纯棉短袖T恤，男女同款，透气速干">夏季纯棉短袖T恤，男女同款，透气速干</textarea>
+
+      <div style="height:16px" data-page-node-id="aYZ7kJsNOZ28NcXxre9liA"></div>
+      <label data-page-node-id="AZXxbB2hf4oY54zvfDFofe">目标平台</label>
+      <div class="segmented" id="platforms" data-page-node-id="9E9yuAvasnqcDUH3LLDZbI">
+        <button type="button" data-v="tmall" aria-pressed="true" data-page-node-id="4juCcTlcZNdtO0KotIHKXF">天猫</button>
+        <button type="button" data-v="jd" aria-pressed="false" data-page-node-id="SZKycSfcdbXXEkg6MJH36N">京东</button>
+        <button type="button" data-v="amazon" aria-pressed="false" data-page-node-id="sUjnjnlXJNgHCdOWIYKtft">亚马逊</button>
+      </div>
+
+      <div class="switch" data-page-node-id="75WVa66ZPXezu83kJ1Nz29">
+        <span data-page-node-id="PVGpW4oT5MscfJug8fVMoC">自动通过人工审核节点（演示）</span>
+        <input type="checkbox" id="autoApprove" checked data-page-node-id="DCCaryWLzoAIHAer5UPzDr">
+      </div>
+
+      <button class="btn" id="run" data-page-node-id="GWPxFzbi14J2ExsTlBwE9A">生成上架方案</button>
+      <p class="hint" data-page-node-id="DSFPxI9gsT1TDmuGCoVVsf">调用 POST /cases，编排器会自动完成选品→信息结构化→出图→合规→刊登。</p>
+    </div>
+
+    <div class="card" data-page-node-id="Ro1T5y57ajMiPlC3KUBFSg">
+      <h2 data-page-node-id="Lqtk6IVKLauHjyHdSpS9ez">工作流阶段</h2>
+      <ul class="steps" id="steps" data-page-node-id="lKg3pET90IhxdkHuK31xdD"></ul>
+    </div>
+  </section>
+
+  <section id="output" data-page-node-id="NjMe8odP0AmrrQ3dStmvRm">
+    <div class="empty" data-page-node-id="32vceYNZoG2dQpXtDxQ8ml">
+      <strong data-page-node-id="hinDi9UxSk6qled73NcCXY">还没有生成结果</strong>
+      填写商品信息后点「生成上架方案」，这里会显示编排器产出的三张图与承载卖点。
+    </div>
+  </section>
+</main>
+
+<script>
+const STAGES = ["SIGNAL 市场信号", "SELECTION 选品", "INFO 信息结构化", "VISUAL 视觉生成",
+                "COMPLIANCE 合规审查", "LISTING 刊登", "FEEDBACK 反馈"];
+
+const el = {
+  product: document.getElementById("product"),
+  run: document.getElementById("run"),
+  output: document.getElementById("output"),
+  steps: document.getElementById("steps"),
+  dot: document.getElementById("healthDot"),
+  healthText: document.getElementById("healthText"),
+};
+
+let platform = "tmall";
+document.getElementById("platforms").addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  platform = b.dataset.v;
+  [...e.currentTarget.children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+});
+
+function paintSteps(state) {
+  const done = state === "done";
+  el.steps.innerHTML = STAGES.map((s, i) => {
+    const cls = done ? "done" : (i === 0 && state === "running" ? "active" : "");
+    return `<li class="${cls}"><span class="tick">✓</span>${s}</li>`;
+  }).join("");
+}
+paintSteps("idle");
+
+async function checkHealth() {
+  try {
+    const r = await fetch("/health");
+    const j = await r.json();
+    el.dot.classList.add("on");
+    el.healthText.textContent = j.service || "服务正常";
+  } catch {
+    el.healthText.textContent = "服务不可用";
+  }
+}
+checkHealth();
+
+const TYPE_CN = { main: "主图", scene: "场景图", detail: "细节图" };
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+el.run.addEventListener("click", async () => {
+  const name = el.product.value.trim();
+  if (!name) { el.product.focus(); return; }
+  el.run.disabled = true;
+  el.run.textContent = "编排中…";
+  paintSteps("running");
+  el.output.innerHTML = `<div class="skeleton"><div></div><div></div><div></div></div>`;
+  const t0 = performance.now();
+
+  try {
+    const resp = await fetch("/cases", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        platform,
+        meta: { product_name: name.slice(0, 120) },
+        auto_approve: document.getElementById("autoApprove").checked,
+      }),
+    });
+    if (!resp.ok) throw new Error("HTTP " + resp.status + " " + (await resp.text()).slice(0, 160));
+    const d = await resp.json();
+    const secs = ((performance.now() - t0) / 1000).toFixed(1);
+    paintSteps(d.status === "CLOSED" ? "done" : "running");
+    render(d, secs);
+  } catch (err) {
+    el.output.innerHTML = `<div class="err">生成失败：${esc(err.message)}</div>`;
+    paintSteps("idle");
+  } finally {
+    el.run.disabled = false;
+    el.run.textContent = "生成上架方案";
+  }
+});
+
+function render(d, secs) {
+  const shots = d.visual_results || [];
+  const cards = shots.map((v) => `
+    <div class="shot">
+      <img src="${esc(v.image_url)}" alt="${esc(TYPE_CN[v.image_type] || v.image_type)}">
+      <div class="meta">
+        <span class="tag">${esc(TYPE_CN[v.image_type] || v.image_type || "图片")}</span>
+        <p class="sp">${esc(v.carries_selling_point || "—")}</p>
+        <div class="flags">${esc((v.quality_flags || []).join(" · "))}</div>
+        <div class="flags">对齐分数 ${esc(v.alignment_score ?? "—")} · 来源 ${esc(v.provider || "—")}</div>
+      </div>
+    </div>`).join("");
+
+  el.output.innerHTML = `
+    <div class="summary">
+      <div>案例状态<b>${esc(d.status)}</b></div>
+      <div>当前阶段<b>${esc(d.current_stage || "—")}</b></div>
+      <div>产出图片<b>${shots.length} 张</b></div>
+      <div>重排次数<b>${esc(d.replan_attempts ?? 0)}</b></div>
+      <div>决策轨迹<b>${esc(d.trace_count ?? 0)} 条</b></div>
+      <div>端到端耗时<b>${esc(secs)} s</b></div>
+    </div>
+    <div class="grid">${cards}</div>`;
+}
+</script>
+</body>
+</html>

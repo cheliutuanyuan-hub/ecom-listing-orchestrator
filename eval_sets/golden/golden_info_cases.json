@@ -1,0 +1,119 @@
+[
+  {
+    "id": "g01",
+    "selected": {"id": "h1", "rationale": "eco-friendly materials drive customer satisfaction"},
+    "info": {
+      "title": "Premium Eco-Friendly Product | Verified Listing",
+      "category": "general",
+      "specs": {"material": "eco_alloy"},
+      "selling_points": ["Eco-friendly materials", "High customer satisfaction"],
+      "description": "desc"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "g02",
+    "selected": {"id": "h2", "rationale": "compact gadgets save space and ship fast"},
+    "info": {
+      "title": "Compact Gadget | Verified Listing",
+      "category": "home_kitchen",
+      "specs": {"material": "steel"},
+      "selling_points": ["Space-saving compact design", "Reliable fast shipping"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "g03",
+    "selected": {"id": "h3", "rationale": "smart home sensors automate control with detailed specs"},
+    "info": {
+      "title": "Smart Sensor | Verified Listing",
+      "category": "smart_home",
+      "specs": {"origin": "h3"},
+      "selling_points": ["Smart, automated control", "Clear, detailed spec sheet"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "g04",
+    "selected": {"id": "h4", "rationale": "customers want rich scene photography and fast shipping"},
+    "info": {
+      "title": "Scene Product | Verified Listing",
+      "category": "general",
+      "specs": {"material": "alloy"},
+      "selling_points": ["Rich scene photography", "Reliable fast shipping"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "g05",
+    "selected": {"id": "h5", "rationale": "eco friendly packaging praised by customers"},
+    "info": {
+      "title": "Packaging Product | Verified Listing",
+      "category": "general",
+      "specs": {"material": "paper"},
+      "selling_points": ["Eco-friendly materials", "High customer satisfaction"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "g06",
+    "selected": {"id": "h6", "rationale": "durable goods win repeat customers"},
+    "info": {
+      "title": "Durable Goods | Verified Listing",
+      "category": "general",
+      "specs": {"material": "alloy"},
+      "selling_points": ["Durable materials", "High customer satisfaction"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 1.0, "critical": false}
+  },
+  {
+    "id": "d01",
+    "selected": {"id": "h7", "rationale": "eco-friendly materials drive customer satisfaction"},
+    "info": {
+      "title": "Eco Product | Verified Listing",
+      "category": "general",
+      "specs": {"material": "eco_alloy"},
+      "selling_points": ["Eco-friendly materials", "Untraceable premium quality"],
+      "description": "d"
+    },
+    "expect": {"factuality": 0.5, "coverage": 1.0, "compliance": 1.0, "critical": true}
+  },
+  {
+    "id": "d02",
+    "selected": {"id": "h8", "rationale": "eco-friendly materials drive customer satisfaction"},
+    "info": {
+      "title": "Eco Product | Verified Listing",
+      "selling_points": ["Eco-friendly materials", "High customer satisfaction"]
+    },
+    "expect": {"factuality": 1.0, "coverage": 0.4, "compliance": 1.0, "critical": true}
+  },
+  {
+    "id": "d03",
+    "selected": {"id": "h9", "rationale": "eco-friendly materials drive customer satisfaction"},
+    "info": {
+      "title": "最好用的产品 | Verified Listing",
+      "category": "general",
+      "specs": {"material": "eco_alloy"},
+      "selling_points": ["Eco-friendly materials", "High customer satisfaction"],
+      "description": "d"
+    },
+    "expect": {"factuality": 1.0, "coverage": 1.0, "compliance": 0.0, "critical": true}
+  },
+  {
+    "id": "d04",
+    "selected": {"id": "h10", "rationale": "eco-friendly materials drive customer satisfaction"},
+    "info": {
+      "title": "Eco Product | Verified Listing",
+      "category": "general",
+      "specs": {"material": "eco_alloy"},
+      "selling_points": [],
+      "description": "d"
+    },
+    "expect": {"factuality": 0.0, "coverage": 0.8, "compliance": 1.0, "critical": true}
+  }
+]
